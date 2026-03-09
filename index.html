@@ -9,13 +9,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      --blue:        #6495ED;
+      --blue-dark:   #4a7fd4;
+      --blue-glow:   rgba(100,149,237,0.15);
       --navy:        #0a0e1a;
       --navy-mid:    #111827;
       --navy-card:   #1a2235;
       --navy-border: #2a3550;
-      --green:       #6495ED;
-      --green-dark:  #4a7fd4;
-      --green-glow:  rgba(100,149,237,0.15);
       --white:       #ffffff;
       --text:        #e2e8f0;
       --muted:       #94a3b8;
@@ -50,13 +50,12 @@
     .topbar-logo {
       height: 26px;
       filter: invert(1) brightness(2);
-      opacity: 1;
     }
 
     .topbar-right {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
     }
 
     .topbar-tag {
@@ -68,9 +67,9 @@
     }
 
     .topbar-badge {
-      background: var(--green-glow);
+      background: rgba(100,149,237,0.15);
       border: 1px solid rgba(100,149,237,0.3);
-      color: var(--green);
+      color: var(--blue);
       font-size: 10px;
       font-weight: 600;
       letter-spacing: 1px;
@@ -79,7 +78,7 @@
       border-radius: 20px;
     }
 
-    /* ── Hero band ── */
+    /* ── Hero ── */
     .hero {
       background: linear-gradient(135deg, #0d1526 0%, #111d35 50%, #0a1420 100%);
       border-bottom: 1px solid var(--navy-border);
@@ -111,7 +110,7 @@
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 3px;
-      color: var(--green);
+      color: var(--blue);
       text-transform: uppercase;
       margin-bottom: 16px;
     }
@@ -124,15 +123,12 @@
       letter-spacing: -0.5px;
     }
 
-    .hero h1 span {
-      color: var(--green);
-    }
+    .hero h1 span { color: var(--blue); }
 
     .hero-sub {
       margin-top: 12px;
       font-size: 14px;
       color: var(--muted);
-      font-weight: 400;
     }
 
     .hero-logo-block {
@@ -155,37 +151,38 @@
       letter-spacing: 1px;
     }
 
-    /* ── Main content ── */
+    /* ── Main ── */
     .main {
       max-width: 960px;
       margin: 0 auto;
       padding: 44px 40px 80px;
     }
 
-    /* ── Section title ── */
     .section-title {
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 2px;
-      color: var(--green);
+      color: var(--blue);
       text-transform: uppercase;
       margin-bottom: 20px;
     }
 
-    /* ── Input grid ── */
-    .input-grid {
+    /* ── Quantity display cards ── */
+    .qty-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       margin-bottom: 44px;
-      padding: 28px;
-      background: var(--navy-card);
-      border: 1px solid var(--navy-border);
-      border-radius: 12px;
     }
 
-    .field label {
-      display: block;
+    .qty-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 10px;
+      padding: 20px 22px;
+    }
+
+    .qty-card-label {
       font-size: 11px;
       font-weight: 500;
       color: var(--muted);
@@ -194,27 +191,11 @@
       margin-bottom: 8px;
     }
 
-    input[type="number"] {
-      -moz-appearance: textfield;
-      width: 100%;
-      background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
+    .qty-card-value {
+      font-size: 24px;
+      font-weight: 700;
       color: var(--white);
-      padding: 11px 14px;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-    input[type="number"]:focus {
-      outline: none;
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px var(--green-glow);
+      letter-spacing: -0.5px;
     }
 
     /* ── Table card ── */
@@ -240,9 +221,13 @@
       color: var(--white);
     }
 
-    .table-card-hint {
+    .table-card-count {
       font-size: 11px;
       color: var(--dim);
+      background: rgba(255,255,255,0.05);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--navy-border);
     }
 
     table { width: 100%; border-collapse: collapse; }
@@ -256,12 +241,12 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       padding: 12px 24px;
+      text-align: left;
     }
 
-    th:first-child { text-align: left; }
-    th.th-center   { text-align: center; }
-    th.th-right    { text-align: right; }
-    th:last-child  { text-align: right; }
+    th.th-center { text-align: center; }
+    th.th-right  { text-align: right; }
+    th:last-child { text-align: right; }
 
     tbody tr {
       border-bottom: 1px solid rgba(42,53,80,0.6);
@@ -271,48 +256,17 @@
     tbody tr:hover td { background: rgba(255,255,255,0.02); }
 
     td {
-      padding: 14px 24px;
+      padding: 15px 24px;
       font-size: 13px;
       color: var(--text);
       vertical-align: middle;
     }
 
-    td:first-child { font-weight: 500; color: var(--white); }
-    td:last-child  { text-align: right; }
-    td.qty-cell    { text-align: center; color: var(--muted); font-size: 13px; }
-    td.total-cell  { color: var(--green); font-weight: 600; }
-    td.zero-cell   { color: var(--navy-border); }
-
-    .price-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 4px;
-    }
-
-    .price-wrap .sym {
-      font-size: 12px;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-
-    .rate-inp {
-      width: 88px !important;
-      padding: 7px 10px !important;
-      font-size: 13px !important;
-      font-weight: 600 !important;
-      border-radius: 6px !important;
-      background: var(--navy) !important;
-      border-color: var(--navy-border) !important;
-      text-align: right;
-      color: var(--white) !important;
-    }
-
-    .rate-inp:hover { border-color: #3a5070 !important; }
-    .rate-inp:focus {
-      border-color: var(--green) !important;
-      box-shadow: 0 0 0 3px var(--green-glow) !important;
-    }
+    td:first-child  { font-weight: 500; color: var(--white); }
+    td.td-center    { text-align: center; color: var(--muted); }
+    td.td-right     { text-align: right; color: var(--muted); }
+    td.td-total     { text-align: right; color: var(--blue); font-weight: 600; font-size: 14px; }
+    td.td-zero      { text-align: right; color: var(--navy-border); }
 
     /* ── Summary cards ── */
     .summary {
@@ -322,10 +276,7 @@
       margin-top: 24px;
     }
 
-    .card {
-      padding: 28px 32px;
-      border-radius: 12px;
-    }
+    .card { padding: 28px 32px; border-radius: 12px; }
 
     .card-label {
       font-size: 11px;
@@ -362,7 +313,7 @@
       background: radial-gradient(circle, rgba(100,149,237,0.1) 0%, transparent 70%);
     }
     .card-per-order .card-label { color: rgba(100,149,237,0.7); position: relative; }
-    .card-per-order .card-value { color: var(--green); position: relative; }
+    .card-per-order .card-value { color: var(--blue); position: relative; }
 
     /* ── Footer ── */
     .footer {
@@ -398,19 +349,17 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .hero        { animation: fadeDown 0.5s ease both; }
-    .input-grid  { animation: fadeUp 0.5s ease 0.1s both; }
-    .table-card  { animation: fadeUp 0.5s ease 0.15s both; }
-    .summary     { animation: fadeUp 0.5s ease 0.2s both; }
+    .hero       { animation: fadeDown 0.5s ease both; }
+    .qty-grid   { animation: fadeUp 0.5s ease 0.1s both; }
+    .table-card { animation: fadeUp 0.5s ease 0.15s both; }
+    .summary    { animation: fadeUp 0.5s ease 0.2s both; }
 
     @media (max-width: 640px) {
       .topbar { padding: 0 20px; }
       .hero   { padding: 36px 20px 32px; }
       .main   { padding: 32px 20px 60px; }
-      .input-grid { padding: 20px; }
       th, td  { padding: 12px 14px; }
       .summary { grid-template-columns: 1fr; }
-      .rate-inp { width: 72px !important; }
       .hero-logo-block { display: none; }
       .topbar-badge { display: none; }
     }
@@ -420,14 +369,12 @@
 
   <!-- Top nav -->
   <div class="topbar">
-    <img
-      class="topbar-logo"
+    <img class="topbar-logo"
       src="https://raw.githubusercontent.com/abishek-oss/dtc-pricing-calculator/main/amzprepwonglobalclutchchampionsawards1156358703.png"
-      alt="AMZ Prep"
-    />
+      alt="AMZ Prep" />
     <div class="topbar-right">
       <span class="topbar-tag">DTC Pricing</span>
-      <span class="topbar-badge">Live Calculator</span>
+      <span class="topbar-badge">Fee Estimate</span>
     </div>
   </div>
 
@@ -437,49 +384,32 @@
       <div>
         <div class="hero-eyebrow">DTC Details Fee</div>
         <h1>Pricing <span>Calculator</span></h1>
-        <p class="hero-sub">Estimate your DTC fulfillment costs in real time. Edit any rate to match your quote.</p>
+        <p class="hero-sub">Your estimated DTC fulfillment costs based on your order volume.</p>
       </div>
       <div class="hero-logo-block">
-        <img
-          class="hero-logo"
+        <img class="hero-logo"
           src="https://raw.githubusercontent.com/abishek-oss/dtc-pricing-calculator/main/amzprepwonglobalclutchchampionsawards1156358703.png"
-          alt="AMZ Prep"
-        />
+          alt="AMZ Prep" />
         <span class="hero-url">amzprep.com</span>
       </div>
     </div>
   </div>
 
-  <!-- Main content -->
+  <!-- Main -->
   <div class="main">
 
-    <!-- Quantity Inputs -->
-    <div class="section-title">Quantity Inputs</div>
-    <div class="input-grid">
-      <div class="field">
-        <label>Total Orders / SKUs</label>
-        <input type="number" id="qty" value="7500" min="0" oninput="calc()" />
-      </div>
-      <div class="field">
-        <label>Pallets Stored</label>
-        <input type="number" id="pallets" value="1000" min="0" oninput="calc()" />
-      </div>
-      <div class="field">
-        <label>Container Destuffs (40ft)</label>
-        <input type="number" id="containers" value="0" min="0" oninput="calc()" />
-      </div>
-      <div class="field">
-        <label>Pallet Put Aways</label>
-        <input type="number" id="putaways" value="0" min="0" oninput="calc()" />
-      </div>
+    <!-- Quantity display -->
+    <div class="section-title">Your Volume</div>
+    <div class="qty-grid" id="qtyGrid">
+      <!-- populated by JS -->
     </div>
 
-    <!-- Line Items Table -->
-    <div class="section-title">Line Items</div>
+    <!-- Line items -->
+    <div class="section-title">Fee Breakdown</div>
     <div class="table-card">
       <div class="table-card-header">
-        <span class="table-card-title">Fee Breakdown</span>
-        <span class="table-card-hint">Click any unit price to edit</span>
+        <span class="table-card-title">Line Items</span>
+        <span class="table-card-count" id="lineCount">— items</span>
       </div>
       <table>
         <thead>
@@ -487,52 +417,11 @@
             <th>Service</th>
             <th class="th-center">Quantity</th>
             <th class="th-right">Unit Price</th>
-            <th>Total</th>
+            <th class="th-right">Total</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Inbound Order Fee</td>
-            <td class="qty-cell" id="q_order"></td>
-            <td><div class="price-wrap"><span class="sym">$</span><input type="number" class="rate-inp" id="r_order" value="1.48" step="0.01" min="0" oninput="calc()" /></div></td>
-            <td id="t_order" class="zero-cell">$0.00</td>
-          </tr>
-          <tr>
-            <td>Pick Fee</td>
-            <td class="qty-cell" id="q_pick"></td>
-            <td><div class="price-wrap"><span class="sym">$</span><input type="number" class="rate-inp" id="r_pick" value="0.55" step="0.01" min="0" oninput="calc()" /></div></td>
-            <td id="t_pick" class="zero-cell">$0.00</td>
-          </tr>
-          <tr>
-            <td>Tech Fee</td>
-            <td class="qty-cell" id="q_tech"></td>
-            <td><div class="price-wrap"><span class="sym">$</span><input type="number" class="rate-inp" id="r_tech" value="0.20" step="0.01" min="0" oninput="calc()" /></div></td>
-            <td id="t_tech" class="zero-cell">$0.00</td>
-          </tr>
-          <tr>
-            <td>Shipping</td>
-            <td class="qty-cell" id="q_ship"></td>
-            <td><div class="price-wrap"><span class="sym">$</span><input type="number" class="rate-inp" id="r_ship" value="15.73" step="0.01" min="0" oninput="calc()" /></div></td>
-            <td id="t_ship" class="zero-cell">$0.00</td>
-          </tr>
-          <tr>
-            <td>Pallets Stored</td>
-            <td class="qty-cell" id="q_storage"></td>
-            <td><div class="price-wrap"><span class="sym">$</span><input type="number" class="rate-inp" id="r_storage" value="17.00" step="0.01" min="0" oninput="calc()" /></div></td>
-            <td id="t_storage" class="zero-cell">$0.00</td>
-          </tr>
-          <tr>
-            <td>Container Destuff (40ft)</td>
-            <td class="qty-cell" id="q_container"></td>
-            <td><div class="price-wrap"><span class="sym">$</span><input type="number" class="rate-inp" id="r_container" value="625.00" step="0.01" min="0" oninput="calc()" /></div></td>
-            <td id="t_container" class="zero-cell">$0.00</td>
-          </tr>
-          <tr>
-            <td>Pallet Put Away</td>
-            <td class="qty-cell" id="q_putaway"></td>
-            <td><div class="price-wrap"><span class="sym">$</span><input type="number" class="rate-inp" id="r_putaway" value="5.50" step="0.01" min="0" oninput="calc()" /></div></td>
-            <td id="t_putaway" class="zero-cell">$0.00</td>
-          </tr>
+        <tbody id="tableBody">
+          <!-- populated by JS -->
         </tbody>
       </table>
     </div>
@@ -541,72 +430,83 @@
     <div class="summary">
       <div class="card card-subtotal">
         <div class="card-label">Subtotal</div>
-        <div class="card-value" id="subtotal">$0.00</div>
+        <div class="card-value" id="subtotal">—</div>
       </div>
       <div class="card card-per-order">
         <div class="card-label">Cost Per Order</div>
-        <div class="card-value" id="perOrder">$0.00</div>
+        <div class="card-value" id="perOrder">—</div>
       </div>
     </div>
 
     <!-- Footer -->
     <div class="footer">
       <span class="footer-text">All figures in USD &nbsp;·&nbsp; AMZ Prep &nbsp;·&nbsp; amzprep.com</span>
-      <img
-        class="footer-logo"
+      <img class="footer-logo"
         src="https://raw.githubusercontent.com/abishek-oss/dtc-pricing-calculator/main/amzprepwonglobalclutchchampionsawards1156358703.png"
-        alt="AMZ Prep"
-      />
+        alt="AMZ Prep" />
     </div>
 
   </div>
 
+  <!-- Load config first, then run calculator -->
+  <script src="config.js"></script>
   <script>
-    function v(id) { return parseFloat(document.getElementById(id).value) || 0; }
-    function fmt(n) { return n.toLocaleString('en-US', { style: 'currency', currency: 'USD' }); }
+    const fmt = n => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
-    function setTotal(id, total) {
-      const el = document.getElementById(id);
-      el.textContent = fmt(total);
-      el.className = total > 0 ? 'total-cell' : 'zero-cell';
-    }
+    function build() {
+      const d = CONFIG.defaults;
+      const qtyMap = {
+        orders:     d.orders,
+        pallets:    d.pallets,
+        containers: d.containers,
+        putaways:   d.putaways,
+      };
 
-    function calc() {
-      const qty        = v('qty');
-      const pallets    = v('pallets');
-      const containers = v('containers');
-      const putaways   = v('putaways');
+      const qtyLabels = {
+        orders:     'Total Orders / SKUs',
+        pallets:    'Pallets Stored',
+        containers: 'Container Destuffs (40ft)',
+        putaways:   'Pallet Put Aways',
+      };
 
-      document.getElementById('q_order').textContent     = qty.toLocaleString();
-      document.getElementById('q_pick').textContent      = qty.toLocaleString();
-      document.getElementById('q_tech').textContent      = qty.toLocaleString();
-      document.getElementById('q_ship').textContent      = qty.toLocaleString();
-      document.getElementById('q_storage').textContent   = pallets.toLocaleString();
-      document.getElementById('q_container').textContent = containers.toLocaleString();
-      document.getElementById('q_putaway').textContent   = putaways.toLocaleString();
+      // Build quantity cards — only show non-zero quantities
+      const qtyGrid = document.getElementById('qtyGrid');
+      Object.entries(qtyMap).forEach(([key, val]) => {
+        if (val <= 0) return;
+        qtyGrid.innerHTML += `
+          <div class="qty-card">
+            <div class="qty-card-label">${qtyLabels[key]}</div>
+            <div class="qty-card-value">${val.toLocaleString()}</div>
+          </div>`;
+      });
 
-      const tOrder     = qty * v('r_order');
-      const tPick      = qty * v('r_pick');
-      const tTech      = qty * v('r_tech');
-      const tShip      = qty * v('r_ship');
-      const tStorage   = pallets * v('r_storage');
-      const tContainer = containers * v('r_container');
-      const tPutaway   = putaways * v('r_putaway');
+      // Build line items table
+      const items = CONFIG.lineItems.filter(i => i.show !== false);
+      document.getElementById('lineCount').textContent = `${items.length} items`;
 
-      setTotal('t_order',     tOrder);
-      setTotal('t_pick',      tPick);
-      setTotal('t_tech',      tTech);
-      setTotal('t_ship',      tShip);
-      setTotal('t_storage',   tStorage);
-      setTotal('t_container', tContainer);
-      setTotal('t_putaway',   tPutaway);
+      let subtotal = 0;
+      const tbody = document.getElementById('tableBody');
 
-      const subtotal = tOrder + tPick + tTech + tShip + tStorage + tContainer + tPutaway;
+      items.forEach(item => {
+        const qty   = qtyMap[item.qtyKey] || 0;
+        const total = qty * item.rate;
+        subtotal += total;
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.label}</td>
+            <td class="td-center">${qty.toLocaleString()}</td>
+            <td class="td-right">${fmt(item.rate)}</td>
+            <td class="${total > 0 ? 'td-total' : 'td-zero'}">${fmt(total)}</td>
+          </tr>`;
+      });
+
+      const perOrder = d.orders > 0 ? subtotal / d.orders : 0;
       document.getElementById('subtotal').textContent = fmt(subtotal);
-      document.getElementById('perOrder').textContent = fmt(qty > 0 ? subtotal / qty : 0);
+      document.getElementById('perOrder').textContent = fmt(perOrder);
     }
 
-    calc();
+    build();
   </script>
 </body>
 </html>
