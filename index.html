@@ -3,84 +3,193 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DTC Pricing Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>AMZ Prep — DTC Pricing Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #c8a96e;
-      --bg: #0f0f0f;
-      --surface: #141414;
-      --border: #222;
-      --text: #e8e0d0;
-      --muted: #666;
-      --dim: #444;
+      --navy:        #0a0e1a;
+      --navy-mid:    #111827;
+      --navy-card:   #1a2235;
+      --navy-border: #2a3550;
+      --green:       #6495ED;
+      --green-dark:  #4a7fd4;
+      --green-glow:  rgba(100,149,237,0.15);
+      --white:       #ffffff;
+      --text:        #e2e8f0;
+      --muted:       #94a3b8;
+      --dim:         #64748b;
+      --input-bg:    #1e2d47;
+      --input-border:#2e4060;
     }
 
     body {
-      background: var(--bg);
+      background: var(--navy);
       color: var(--text);
-      font-family: 'DM Mono', monospace;
+      font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      padding: 48px 24px;
+      padding: 0;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
+    /* ── Top nav bar ── */
+    .topbar {
+      width: 100%;
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .wrapper {
-      max-width: 920px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
+    .topbar-logo {
+      height: 26px;
+      filter: invert(1) brightness(2);
+      opacity: 1;
     }
 
-    .header {
-      border-bottom: 1px solid #1e1e1e;
-      padding-bottom: 32px;
-      margin-bottom: 44px;
-      animation: fadeDown 0.6s ease both;
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
 
-    .eyebrow {
-      font-size: 10px;
-      letter-spacing: 4px;
+    .topbar-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
       color: var(--dim);
       text-transform: uppercase;
-      margin-bottom: 14px;
     }
 
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(38px, 6vw, 62px);
-      font-weight: 900;
-      line-height: 1.05;
-      color: #fff;
+    .topbar-badge {
+      background: var(--green-glow);
+      border: 1px solid rgba(100,149,237,0.3);
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
     }
 
-    h1 span { color: var(--gold); }
+    /* ── Hero band ── */
+    .hero {
+      background: linear-gradient(135deg, #0d1526 0%, #111d35 50%, #0a1420 100%);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 56px 40px 48px;
+      position: relative;
+      overflow: hidden;
+    }
 
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(100,149,237,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 span {
+      color: var(--green);
+    }
+
+    .hero-sub {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .hero-logo-block {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .hero-logo {
+      height: 20px;
+      filter: invert(1) brightness(2);
+      opacity: 0.4;
+      display: block;
+      margin-left: auto;
+      margin-bottom: 6px;
+    }
+
+    .hero-url {
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 1px;
+    }
+
+    /* ── Main content ── */
+    .main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 44px 40px 80px;
+    }
+
+    /* ── Section title ── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* ── Input grid ── */
     .input-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
-      animation: fadeUp 0.5s ease 0.1s both;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 44px;
+      padding: 28px;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
     }
 
     .field label {
       display: block;
-      font-size: 10px;
+      font-size: 11px;
+      font-weight: 500;
       color: var(--muted);
-      letter-spacing: 2px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       margin-bottom: 8px;
     }
@@ -88,13 +197,14 @@
     input[type="number"] {
       -moz-appearance: textfield;
       width: 100%;
-      background: var(--surface);
-      border: 1px solid #2e2e2e;
-      border-radius: 4px;
-      color: var(--text);
-      padding: 10px 14px;
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 8px;
+      color: var(--white);
+      padding: 11px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
 
@@ -103,63 +213,81 @@
 
     input[type="number"]:focus {
       outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(200,169,110,0.08);
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px var(--green-glow);
     }
 
-    .table-wrap {
-      margin-bottom: 28px;
-      animation: fadeUp 0.5s ease 0.15s both;
+    /* ── Table card ── */
+    .table-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
     }
 
-    .section-label {
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+    .table-card-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--navy-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .table-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .table-card-hint {
+      font-size: 11px;
       color: var(--dim);
-      margin-bottom: 16px;
     }
 
     table { width: 100%; border-collapse: collapse; }
 
-    thead tr { border-bottom: 1px solid #1e1e1e; }
+    thead tr { border-bottom: 1px solid var(--navy-border); }
 
     th {
-      font-size: 10px;
+      font-size: 11px;
+      font-weight: 500;
       color: var(--dim);
-      letter-spacing: 3px;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      padding: 0 10px 14px;
-      font-weight: 400;
+      padding: 12px 24px;
     }
 
-    th:first-child { text-align: left; padding-left: 0; }
+    th:first-child { text-align: left; }
     th.th-center   { text-align: center; }
     th.th-right    { text-align: right; }
-    th:last-child  { text-align: right; padding-right: 0; }
+    th:last-child  { text-align: right; }
 
-    tbody tr { border-bottom: 1px solid #181818; transition: background 0.15s; }
-    tbody tr:hover td { background: rgba(200,169,110,0.03); }
+    tbody tr {
+      border-bottom: 1px solid rgba(42,53,80,0.6);
+      transition: background 0.12s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
 
     td {
-      padding: 11px 10px;
+      padding: 14px 24px;
       font-size: 13px;
-      color: #bbb;
+      color: var(--text);
       vertical-align: middle;
-      transition: background 0.15s;
     }
 
-    td:first-child { padding-left: 0; color: #ccc; }
-    td:last-child  { padding-right: 0; text-align: right; }
-    td.qty-cell    { text-align: center; color: var(--muted); }
-    td.total-cell  { color: var(--text); font-weight: 500; }
-    td.zero-cell   { color: #2a2a2a; }
+    td:first-child { font-weight: 500; color: var(--white); }
+    td:last-child  { text-align: right; }
+    td.qty-cell    { text-align: center; color: var(--muted); font-size: 13px; }
+    td.total-cell  { color: var(--green); font-weight: 600; }
+    td.zero-cell   { color: var(--navy-border); }
 
     .price-wrap {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: 5px;
+      gap: 4px;
     }
 
     .price-wrap .sym {
@@ -169,81 +297,164 @@
     }
 
     .rate-inp {
-      width: 90px !important;
+      width: 88px !important;
       padding: 7px 10px !important;
       font-size: 13px !important;
-      border-color: #252525 !important;
+      font-weight: 600 !important;
+      border-radius: 6px !important;
+      background: var(--navy) !important;
+      border-color: var(--navy-border) !important;
       text-align: right;
-      background: #111 !important;
+      color: var(--white) !important;
     }
 
-    .rate-inp:hover { border-color: #383838 !important; }
-    .rate-inp:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(200,169,110,0.08) !important; }
+    .rate-inp:hover { border-color: #3a5070 !important; }
+    .rate-inp:focus {
+      border-color: var(--green) !important;
+      box-shadow: 0 0 0 3px var(--green-glow) !important;
+    }
 
+    /* ── Summary cards ── */
     .summary {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 28px;
-      animation: fadeUp 0.5s ease 0.2s both;
+      gap: 16px;
+      margin-top: 24px;
     }
 
-    .card { padding: 28px; border-radius: 8px; }
+    .card {
+      padding: 28px 32px;
+      border-radius: 12px;
+    }
 
     .card-label {
-      font-size: 10px;
-      letter-spacing: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 12px;
     }
 
     .card-value {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(24px, 4vw, 32px);
-      font-weight: 700;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 800;
+      letter-spacing: -1px;
     }
 
-    .card-subtotal { background: var(--surface); border: 1px solid var(--border); }
-    .card-subtotal .card-label { color: var(--dim); }
-    .card-subtotal .card-value { color: #fff; }
+    .card-subtotal {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+    }
+    .card-subtotal .card-label { color: var(--muted); }
+    .card-subtotal .card-value { color: var(--white); }
 
-    .card-per-order { background: #16120a; border: 1px solid rgba(200,169,110,0.25); }
-    .card-per-order .card-label { color: rgba(200,169,110,0.6); }
-    .card-per-order .card-value { color: var(--gold); }
+    .card-per-order {
+      background: linear-gradient(135deg, #0f1a2e, #101828);
+      border: 1px solid rgba(100,149,237,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .card-per-order::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(100,149,237,0.1) 0%, transparent 70%);
+    }
+    .card-per-order .card-label { color: rgba(100,149,237,0.7); position: relative; }
+    .card-per-order .card-value { color: var(--green); position: relative; }
 
+    /* ── Footer ── */
     .footer {
-      margin-top: 48px;
-      font-size: 10px;
-      color: #222;
-      text-align: center;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+      margin-top: 60px;
+      padding-top: 28px;
+      border-top: 1px solid var(--navy-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
+    .footer-text {
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 1px;
+    }
+
+    .footer-logo {
+      height: 15px;
+      filter: invert(1) brightness(2);
+      opacity: 0.2;
+    }
+
+    /* ── Animations ── */
     @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-16px); }
+      from { opacity: 0; transform: translateY(-12px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 600px) {
+    .hero        { animation: fadeDown 0.5s ease both; }
+    .input-grid  { animation: fadeUp 0.5s ease 0.1s both; }
+    .table-card  { animation: fadeUp 0.5s ease 0.15s both; }
+    .summary     { animation: fadeUp 0.5s ease 0.2s both; }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 0 20px; }
+      .hero   { padding: 36px 20px 32px; }
+      .main   { padding: 32px 20px 60px; }
+      .input-grid { padding: 20px; }
+      th, td  { padding: 12px 14px; }
       .summary { grid-template-columns: 1fr; }
       .rate-inp { width: 72px !important; }
+      .hero-logo-block { display: none; }
+      .topbar-badge { display: none; }
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
 
-    <div class="header">
-      <div class="eyebrow">DTC Details Fee</div>
-      <h1>Pricing <span>Calculator</span></h1>
+  <!-- Top nav -->
+  <div class="topbar">
+    <img
+      class="topbar-logo"
+      src="https://raw.githubusercontent.com/abishek-oss/dtc-pricing-calculator/main/amzprepwonglobalclutchchampionsawards1156358703.png"
+      alt="AMZ Prep"
+    />
+    <div class="topbar-right">
+      <span class="topbar-tag">DTC Pricing</span>
+      <span class="topbar-badge">Live Calculator</span>
     </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">DTC Details Fee</div>
+        <h1>Pricing <span>Calculator</span></h1>
+        <p class="hero-sub">Estimate your DTC fulfillment costs in real time. Edit any rate to match your quote.</p>
+      </div>
+      <div class="hero-logo-block">
+        <img
+          class="hero-logo"
+          src="https://raw.githubusercontent.com/abishek-oss/dtc-pricing-calculator/main/amzprepwonglobalclutchchampionsawards1156358703.png"
+          alt="AMZ Prep"
+        />
+        <span class="hero-url">amzprep.com</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
 
     <!-- Quantity Inputs -->
+    <div class="section-title">Quantity Inputs</div>
     <div class="input-grid">
       <div class="field">
         <label>Total Orders / SKUs</label>
@@ -263,9 +474,13 @@
       </div>
     </div>
 
-    <!-- Table -->
-    <div class="table-wrap">
-      <div class="section-label">Line Items — unit prices are editable</div>
+    <!-- Line Items Table -->
+    <div class="section-title">Line Items</div>
+    <div class="table-card">
+      <div class="table-card-header">
+        <span class="table-card-title">Fee Breakdown</span>
+        <span class="table-card-hint">Click any unit price to edit</span>
+      </div>
       <table>
         <thead>
           <tr>
@@ -334,7 +549,16 @@
       </div>
     </div>
 
-    <div class="footer">All figures in USD &middot; Live Calculation</div>
+    <!-- Footer -->
+    <div class="footer">
+      <span class="footer-text">All figures in USD &nbsp;·&nbsp; AMZ Prep &nbsp;·&nbsp; amzprep.com</span>
+      <img
+        class="footer-logo"
+        src="https://raw.githubusercontent.com/abishek-oss/dtc-pricing-calculator/main/amzprepwonglobalclutchchampionsawards1156358703.png"
+        alt="AMZ Prep"
+      />
+    </div>
+
   </div>
 
   <script>
