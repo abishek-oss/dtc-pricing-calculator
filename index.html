@@ -453,60 +453,52 @@
   <script>
     const fmt = n => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
-    function build() {
-      const d = CONFIG.defaults;
-      const qtyMap = {
-        orders:     d.orders,
-        pallets:    d.pallets,
-        containers: d.containers,
-        putaways:   d.putaways,
-      };
+function build() {
+  // Build a lookup map from CONFIG.quantities: { key -> value }
+  const qtyMap = {};
+  CONFIG.quantities.forEach(q => { qtyMap[q.key] = q.value; });
 
-      const qtyLabels = {
-        orders:     'Total Orders / SKUs',
-        pallets:    'Pallets Stored',
-        containers: 'Container Destuffs (40ft)',
-        putaways:   'Pallet Put Aways',
-      };
+  // Build quantity cards (only visible ones)
+  const qtyGrid = document.getElementById('qtyGrid');
+  CONFIG.quantities
+    .filter(q => q.show !== false)
+    .forEach(q => {
+      qtyGrid.innerHTML += `
+        <div class="qty-card">
+          <div class="qty-card-label">${q.label}</div>
+          <div class="qty-card-value">${q.value.toLocaleString()}</div>
+        </div>`;
+    });
 
-      // Build quantity cards — only show non-zero quantities
-      const qtyGrid = document.getElementById('qtyGrid');
-      Object.entries(qtyMap).forEach(([key, val]) => {
-        if (val <= 0) return;
-        qtyGrid.innerHTML += `
-          <div class="qty-card">
-            <div class="qty-card-label">${qtyLabels[key]}</div>
-            <div class="qty-card-value">${val.toLocaleString()}</div>
-          </div>`;
-      });
+  // Build line items table (only visible ones)
+  const items = CONFIG.lineItems.filter(i => i.show !== false);
+  document.getElementById('lineCount').textContent = `${items.length} items`;
 
-      // Build line items table
-      const items = CONFIG.lineItems.filter(i => i.show !== false);
-      document.getElementById('lineCount').textContent = `${items.length} items`;
+  let subtotal = 0;
+  const tbody = document.getElementById('tableBody');
 
-      let subtotal = 0;
-      const tbody = document.getElementById('tableBody');
+  items.forEach(item => {
+    const qty   = qtyMap[item.qtyKey] ?? 0;
+    const total = qty * item.rate;
+    subtotal += total;
 
-      items.forEach(item => {
-        const qty   = qtyMap[item.qtyKey] || 0;
-        const total = qty * item.rate;
-        subtotal += total;
+    tbody.innerHTML += `
+      <tr>
+        <td>${item.label}</td>
+        <td class="td-center">${qty.toLocaleString()}</td>
+        <td class="td-right">${fmt(item.rate)}</td>
+        <td class="${total > 0 ? 'td-total' : 'td-zero'}">${fmt(total)}</td>
+      </tr>`;
+  });
 
-        tbody.innerHTML += `
-          <tr>
-            <td>${item.label}</td>
-            <td class="td-center">${qty.toLocaleString()}</td>
-            <td class="td-right">${fmt(item.rate)}</td>
-            <td class="${total > 0 ? 'td-total' : 'td-zero'}">${fmt(total)}</td>
-          </tr>`;
-      });
+  // Cost per order uses the "Shipping" quantity as the order count
+  const orderQty = qtyMap['Shipping'] ?? 0;
+  const perOrder = orderQty > 0 ? subtotal / orderQty : 0;
+  document.getElementById('subtotal').textContent = fmt(subtotal);
+  document.getElementById('perOrder').textContent = fmt(perOrder);
+}
 
-      const perOrder = d.orders > 0 ? subtotal / d.orders : 0;
-      document.getElementById('subtotal').textContent = fmt(subtotal);
-      document.getElementById('perOrder').textContent = fmt(perOrder);
-    }
-
-    build();
+build();
   </script>
 </body>
 </html>
